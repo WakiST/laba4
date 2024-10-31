@@ -1,13 +1,11 @@
 package sort;
 
-import java.util.Arrays;
-
 public class QuickSortExample {
 
-    // Метод быстрой сортировки
+    // Метод быстрой сортировки массива
     public static void quickSort(int[] arr, int low, int high) {
         if (low < high) {
-            // Находим индекс опорного элемента
+            // Определяем индекс опорного элемента после разбиения
             int pivotIndex = partition(arr, low, high);
 
             // Рекурсивно сортируем левую и правую части массива
@@ -16,29 +14,28 @@ public class QuickSortExample {
         }
     }
 
-    // Метод для разбиения массива на две части
+    // Метод для разбиения массива и возвращения индекса опорного элемента
     private static int partition(int[] arr, int low, int high) {
-        // Выбираем последний элемент в качестве опорного (pivot)
-        int pivot = arr[high];
-        int i = low - 1; // Индекс меньших элементов
+        int pivot = arr[high]; // Опорный элемент (последний элемент массива)
+        int smallerElementIndex = low - 1; // Индекс для элементов меньше опорного
 
         for (int j = low; j < high; j++) {
             // Если текущий элемент меньше или равен опорному
             if (arr[j] <= pivot) {
-                i++;
-                // Меняем местами arr[i] и arr[j]
-                int temp = arr[i];
-                arr[i] = arr[j];
+                smallerElementIndex++;
+
+                // Меняем местами текущий элемент и элемент по индексу smallerElementIndex
+                int temp = arr[smallerElementIndex];
+                arr[smallerElementIndex] = arr[j];
                 arr[j] = temp;
             }
-            System.out.println("Исходный массив11: " + Arrays.toString(arr));
         }
 
-        // Ставим опорный элемент на правильную позицию
-        int temp = arr[i + 1];
-        arr[i + 1] = arr[high];
+        // Перемещаем опорный элемент на правильную позицию в отсортированном массиве
+        int temp = arr[smallerElementIndex + 1];
+        arr[smallerElementIndex + 1] = arr[high];
         arr[high] = temp;
 
-        return i + 1; // Возвращаем индекс опорного элемента
+        return smallerElementIndex + 1; // Возвращаем индекс опорного элемента
     }
 }

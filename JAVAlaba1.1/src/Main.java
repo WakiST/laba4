@@ -1,28 +1,47 @@
+
 import com.hotdogs.HotDog;
+import com.hotdogs.HotDogRepository;
 import com.hotdogs.Order;
 
 public class Main {
     public static void main(String[] args) {
-        // РЎРѕР·РґР°РµРј С…РѕС‚-РґРѕРіРё СЃ РЅР°Р·РІР°РЅРёРµРј Рё С†РµРЅРѕР№
+        // Создаем репозиторий хот-догов
+        HotDogRepository repository = new HotDogRepository();
+
+        // Создаем хот-доги
         HotDog hunterDog = new HotDog("HunterDog", 2.5);
         HotDog masterDog = new HotDog("MasterDog", 3.0);
         HotDog berlina = new HotDog("Berlina", 2.8);
 
-        // РЎРѕР·РґР°РµРј Р·Р°РєР°Р·
+        // Добавляем хот-доги в репозиторий
+        repository.addHotDog(hunterDog);
+        repository.addHotDog(masterDog);
+        repository.addHotDog(berlina);
+
+        // Создаем заказ
         Order order = new Order();
 
-        // Р”РѕР±Р°РІР»СЏРµРј С…РѕС‚-РґРѕРіРё РІ Р·Р°РєР°Р·
+        // Добавляем хот-доги в заказ (количество)
         order.addHotDog(hunterDog, 5);
         order.addHotDog(masterDog, 4);
-        order.addHotDog(berlina,3);
+        order.addHotDog(berlina, 3);
 
-        // Р’С‹РІРѕРґРёРј СЃСѓРјРјСѓ Р·Р°РєР°Р·Р°
-        System.out.println("РћР±С‰Р°СЏ СЃСѓРјРјР°: " + order.calculateTotal());
+        // Выводим информацию о заказе
+        System.out.println("Общая сумма: " + order.calculateTotal());
+        System.out.println("Количество заказов: " + order.countOrders());
+        System.out.println("Средняя стоимость: " + order.calculateAverage());
 
-        // Р’С‹РІРѕРґРёРј РєРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°РєР°Р·Р°РЅРЅС‹С… С…РѕС‚-РґРѕРіРѕРІ
-        System.out.println("РљРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°РєР°Р·РѕРІ: " + order.countOrders());
+        // Обновляем хот-дог в репозитории
+        HotDog newDog = new HotDog("SpicyDog", 3.5);
+        repository.updateHotDog(1, newDog);
 
-        // Р’С‹РІРѕРґРёРј СЃСЂРµРґРЅСЋСЋ СЃС‚РѕРёРјРѕСЃС‚СЊ Р·Р°РєР°Р·Р°
-        System.out.println("РЎСЂРµРґРЅСЏСЏ СЃС‚РѕРёРјРѕСЃС‚СЊ: " + order.calculateAverage());
+        // Удаляем хот-дог из репозитория
+        repository.removeHotDog(0);
+
+        // Печать списка всех хот-догов в репозитории
+        System.out.println("Хот-доги в репозитории:");
+        for (HotDog hotDog : repository.getHotDogList()) {
+            System.out.println(hotDog.getName() + ": $" + hotDog.getPrice());
+        }
     }
 }
