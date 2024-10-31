@@ -1,38 +1,51 @@
 package com.hotdogs;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-// Класс-репозиторий для управления коллекцией объектов HotDog
 public class HotDogRepository {
-    private final List<HotDog> hotDogList; // Коллекция хот-догов
-
-    // Конструктор инициализирует пустую коллекцию
+    private final List<HotDog> hotDogList; // Коллекция всех заказанных хот-догов
+    // Конструктор класса
     public HotDogRepository() {
-        this.hotDogList = new ArrayList<>();
+        hotDogList = new ArrayList<>();
     }
 
-    // Метод добавления хот-дога в коллекцию
-    public void addHotDog(HotDog hotDog) {
-        hotDogList.add(hotDog);
-    }
-
-    // Метод удаления хот-дога по индексу из коллекции
-    public void removeHotDog(int index) {
-        if (index >= 0 && index < hotDogList.size()) {
-            hotDogList.remove(index);
+    // Метод для добавления хот-дога в коллекцию
+    public void addHotDog(HotDog hotDog, int quantity) {
+        for (int i = 0; i < quantity; i++) {
+            hotDogList.add(hotDog);
         }
     }
 
-    // Метод обновления хот-дога по индексу
-    public void updateHotDog(int index, HotDog newHotDog) {
-        if (index >= 0 && index < hotDogList.size()) {
-            hotDogList.set(index, newHotDog);
-        }
+    // Метод для подсчета общего количества хот-догов
+    public int countTotalHotDogs() {
+        return hotDogList.size();
     }
 
-    // Метод для получения списка всех хот-догов
-    public List<HotDog> getHotDogList() {
-        return hotDogList;
+    // Метод для подсчета общей стоимости хот-догов
+    public double calculateTotalCost() {
+        double total = 0;
+        for (HotDog hotDog : hotDogList) {
+            total += hotDog.getPrice();
+        }
+        return total;
+    }
+
+    // Метод для подсчета средней стоимости хот-догов
+    public double calculateAverageCost() {
+        int totalHotDogs = countTotalHotDogs();
+        if (totalHotDogs == 0) return 0; // Избегаем деления на ноль
+        return calculateTotalCost() / totalHotDogs;
+    }
+
+    // Метод для вывода всех хот-догов
+    public Set<String> getAvailableHotDogs() {
+        Set<String> uniqueHotDogs = new HashSet<>();
+        for (HotDog hotDog : hotDogList) {
+            uniqueHotDogs.add(hotDog.getName() + ": $" + hotDog.getPrice());
+        }
+        return uniqueHotDogs;
     }
 }

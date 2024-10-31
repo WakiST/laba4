@@ -1,9 +1,9 @@
 package com.hotdogs;
 
-// Класс HotDog для учета хот-догов
+// Базовый класс HotDog для учета общих свойств хот-догов
 public class HotDog {
-    String name; // название хот-дога
-    double price; // цена хот-дога
+    private String name; // название хот-дога
+    private double price; // цена хот-дога
 
     // Конструктор для инициализации хот-дога
     public HotDog(String name, double price) {
@@ -21,3 +21,4 @@ public class HotDog {
         return name;
     }
 }
+

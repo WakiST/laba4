@@ -1,47 +1,29 @@
-
-import com.hotdogs.HotDog;
-import com.hotdogs.HotDogRepository;
-import com.hotdogs.Order;
+import com.hotdogs.*;
 
 public class Main {
     public static void main(String[] args) {
-        // Создаем репозиторий хот-догов
+        // Создаем репозиторий
         HotDogRepository repository = new HotDogRepository();
 
-        // Создаем хот-доги
-        HotDog hunterDog = new HotDog("HunterDog", 2.5);
-        HotDog masterDog = new HotDog("MasterDog", 3.0);
-        HotDog berlina = new HotDog("Berlina", 2.8);
+        // Создаем объекты конкретных типов хот-догов
+        HotDog hunterDog = new HunterDog();
+        HotDog masterDog = new MasterDog();
+        HotDog berlina = new Berlina();
 
         // Добавляем хот-доги в репозиторий
-        repository.addHotDog(hunterDog);
-        repository.addHotDog(masterDog);
-        repository.addHotDog(berlina);
+        repository.addHotDog(hunterDog, 5);
+        repository.addHotDog(masterDog, 3);
+        repository.addHotDog(berlina, 2);
 
-        // Создаем заказ
-        Order order = new Order();
-
-        // Добавляем хот-доги в заказ (количество)
-        order.addHotDog(hunterDog, 5);
-        order.addHotDog(masterDog, 4);
-        order.addHotDog(berlina, 3);
-
-        // Выводим информацию о заказе
-        System.out.println("Общая сумма: " + order.calculateTotal());
-        System.out.println("Количество заказов: " + order.countOrders());
-        System.out.println("Средняя стоимость: " + order.calculateAverage());
-
-        // Обновляем хот-дог в репозитории
-        HotDog newDog = new HotDog("SpicyDog", 3.5);
-        repository.updateHotDog(1, newDog);
-
-        // Удаляем хот-дог из репозитория
-        repository.removeHotDog(0);
-
-        // Печать списка всех хот-догов в репозитории
-        System.out.println("Хот-доги в репозитории:");
-        for (HotDog hotDog : repository.getHotDogList()) {
-            System.out.println(hotDog.getName() + ": $" + hotDog.getPrice());
+        // Выводим доступные виды хот-догов
+        System.out.println("Доступные виды хот-догов:");
+        for (String hotDog : repository.getAvailableHotDogs()) {
+            System.out.println(hotDog);
         }
+
+        // Подсчитываем общее количество, стоимость и среднюю стоимость
+        System.out.println("Общее количество заказанных хот-догов: " + repository.countTotalHotDogs());
+        System.out.println("Общая стоимость заказа: $" + repository.calculateTotalCost());
+        System.out.println("Средняя стоимость одного хот-дога: $" + repository.calculateAverageCost());
     }
 }
